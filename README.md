@@ -1,6 +1,6 @@
 # 🌤️ [Weather Explorer](https://climate-risk-explorer.vercel.app/)
 
-## **Explanation Video:** [Click Here](#)
+## **Explanation Video:** [Click Here](https://drive.google.com/file/d/1a4bXpYPXDgp3Ih7xyXNOWvFhW-Kp5RGw/view?usp=drive_link)
 
 <img width="1831" height="671" alt="Screenshot from 2025-12-09 12-41-12" src="https://github.com/user-attachments/assets/b436612f-8bb1-4ef8-88b8-680e22f60ecc" />
 
@@ -48,7 +48,7 @@ Weather Explorer is a full-stack web application that allows users to:
   weather_<lat>_<lon>_<start>_<end>_<timestamp>.json
   ```
 * **Deployment:** Frontend deployed on Vercel; backend deployed on AWS App Runner for scalable execution.
-* **Validation:** Input validation for latitude, longitude, date ranges (≤31 days), and proper error handling with status codes 400/404/5xx.
+* **Validation:** Input validation for latitude, longitude, date ranges (≤31 days), and proper error handling with status codes.
 
 ---
 
