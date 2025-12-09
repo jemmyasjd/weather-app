@@ -94,7 +94,7 @@ Weather Explorer is a full-stack web application that allows users to:
 
 ## Live Demo 
 
-* **Live Demo:** [Click Here](#)
+* **Live Demo:** [Click Here](https://climate-risk-explorer.vercel.app/)
 
 ---
 
