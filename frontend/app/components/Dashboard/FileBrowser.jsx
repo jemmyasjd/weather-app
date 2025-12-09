@@ -1,15 +1,31 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { FileText, Calendar, Download, FileJson, Trash2, ExternalLink } from 'lucide-react';
-import Card, { CardHeader, CardTitle, CardContent, CardDescription } from '@/app/components/UI/Card';
-import Button from '@/app/components/UI/Button';
-import { weatherAPI } from '@/lib/api';
-import { formatBytes, formatDate } from '@/lib/utils';
-import toast from 'react-hot-toast';
-import LoadingSpinner from './LoadingSpinner';
+import { useState, useEffect } from "react";
+import {
+  FileText,
+  Calendar,
+  Download,
+  FileJson,
+  Trash2,
+  ExternalLink,
+} from "lucide-react";
+import Card, {
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/app/components/UI/Card";
+import Button from "@/app/components/UI/Button";
+import { weatherAPI } from "@/lib/api";
+import { formatBytes, formatDate } from "@/lib/utils";
+import toast from "react-hot-toast";
+import LoadingSpinner from "./LoadingSpinner";
 
-export default function FileBrowser({ onFileSelect, selectedFile }) {
+export default function FileBrowser({
+  onFileSelect,
+  selectedFile,
+  refreshTrigger,
+}) {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,7 +35,7 @@ export default function FileBrowser({ onFileSelect, selectedFile }) {
       const response = await weatherAPI.listWeatherFiles();
       setFiles(response.files || []);
     } catch (error) {
-      toast.error('Failed to fetch files');
+      toast.error("Failed to fetch files");
     } finally {
       setIsLoading(false);
     }
@@ -27,7 +43,7 @@ export default function FileBrowser({ onFileSelect, selectedFile }) {
 
   useEffect(() => {
     fetchFiles();
-  }, []);
+  }, [refreshTrigger]);
 
   const handleFileClick = async (fileName) => {
     try {
@@ -35,13 +51,13 @@ export default function FileBrowser({ onFileSelect, selectedFile }) {
       onFileSelect({ fileName, data });
       toast.success(`Loaded data from ${fileName}`);
     } catch (error) {
-      toast.error('Failed to load file content');
+      toast.error("Failed to load file content");
     }
   };
 
   const handleRefresh = () => {
     fetchFiles();
-    toast.success('File list refreshed');
+    toast.success("File list refreshed");
   };
 
   if (isLoading) {
@@ -58,7 +74,8 @@ export default function FileBrowser({ onFileSelect, selectedFile }) {
               Stored Weather Files
             </CardTitle>
             <CardDescription>
-              Click on any file to view its weather data and visualize temperatures
+              Click on any file to view its weather data and visualize
+              temperatures
             </CardDescription>
           </div>
           <Button onClick={handleRefresh} variant="outline" size="sm">
@@ -76,14 +93,14 @@ export default function FileBrowser({ onFileSelect, selectedFile }) {
             </p>
           </div>
         ) : (
-          <div className="grid gap-3">
+          <div className="grid gap-3 max-h-[300px] overflow-y-auto pr-2">
             {files.map((file) => (
               <div
                 key={file.name}
                 className={`flex items-center justify-between p-4 rounded-lg border transition-all cursor-pointer hover:bg-accent ${
                   selectedFile?.fileName === file.name
-                    ? 'border-primary bg-primary/5'
-                    : 'border-border'
+                    ? "border-primary bg-primary/5"
+                    : "border-border"
                 }`}
                 onClick={() => handleFileClick(file.name)}
               >

@@ -1,32 +1,38 @@
-'use client';
+"use client";
 
-import { Formik, Form } from 'formik';
-import { MapPin, Calendar, CloudDownload } from 'lucide-react';
-import { weatherSchema } from '@/lib/validation';
-import Button from '@/app/components/UI/Button';
-import Card, { CardHeader, CardTitle, CardContent, CardDescription } from '@/app/components/UI/Card';
-import toast from 'react-hot-toast';
+import { Formik, Form } from "formik";
+import { MapPin, Calendar, CloudDownload } from "lucide-react";
+import { weatherSchema } from "@/lib/validation";
+import Button from "@/app/components/UI/Button";
+import Card, {
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/app/components/UI/Card";
+import toast from "react-hot-toast";
 
 export default function InputPanel({ onFetchData, isLoading }) {
   const initialValues = {
-    latitude: '',
-    longitude: '',
-    start_date: '',
-    end_date: '',
+    latitude: "",
+    longitude: "",
+    start_date: "",
+    end_date: "",
   };
 
+  const today = new Date().toISOString().split("T")[0];
   const handleSubmit = async (values, { resetForm }) => {
     try {
       const formattedValues = {
         ...values,
-        start_date: values.start_date.split('T')[0],
-        end_date: values.end_date.split('T')[0],
+        start_date: values.start_date.split("T")[0],
+        end_date: values.end_date.split("T")[0],
       };
       await onFetchData(formattedValues);
-      toast.success('Weather data fetched and stored successfully!');
+      toast.success("Weather data fetched and stored successfully!");
       resetForm();
     } catch (error) {
-      toast.error('Failed to fetch weather data');
+      toast.error("Failed to fetch weather data");
     }
   };
 
@@ -38,7 +44,8 @@ export default function InputPanel({ onFetchData, isLoading }) {
           Fetch Weather Data
         </CardTitle>
         <CardDescription>
-          Enter location coordinates and date range (max 31 days) to fetch historical weather data
+          Enter location coordinates and date range (max 31 days) to fetch
+          historical weather data
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -69,7 +76,9 @@ export default function InputPanel({ onFetchData, isLoading }) {
                     />
                   </label>
                   {errors.latitude && touched.latitude && (
-                    <p className="text-sm text-destructive text-red-500">{errors.latitude}</p>
+                    <p className="text-sm text-destructive text-red-500">
+                      {errors.latitude}
+                    </p>
                   )}
                 </div>
 
@@ -92,7 +101,9 @@ export default function InputPanel({ onFetchData, isLoading }) {
                     />
                   </label>
                   {errors.longitude && touched.longitude && (
-                    <p className="text-sm text-destructive text-red-500">{errors.longitude}</p>
+                    <p className="text-sm text-destructive text-red-500">
+                      {errors.longitude}
+                    </p>
                   )}
                 </div>
 
@@ -109,11 +120,14 @@ export default function InputPanel({ onFetchData, isLoading }) {
                       value={values.start_date}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                       max={today}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </label>
                   {errors.start_date && touched.start_date && (
-                    <p className="text-sm text-destructive text-red-500">{errors.start_date}</p>
+                    <p className="text-sm text-destructive text-red-500">
+                      {errors.start_date}
+                    </p>
                   )}
                 </div>
 
@@ -130,12 +144,15 @@ export default function InputPanel({ onFetchData, isLoading }) {
                       value={values.end_date}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                       min={values.start_date ? values.start_date : undefined}
+                      min={values.start_date ? values.start_date : undefined}
+                      max={today}
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </label>
                   {errors.end_date && touched.end_date && (
-                    <p className="text-sm text-destructive text-red-500">{errors.end_date}</p>
+                    <p className="text-sm text-destructive text-red-500">
+                      {errors.end_date}
+                    </p>
                   )}
                 </div>
               </div>
